@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">DribbbleMvp</string>
+
+    <string name="x_shots">%1$d shots</string>
+
+    <string name="error_message">エラーが発生しました。</string>
+    <string name="ok">ok</string>
+
+
+    <string name="shot">SHOT</string>
+    <string name="shot_id">id: </string>
+    <string name="shot_title">title: </string>
+    <string name="shot_description">description: </string>
+
+    <string name="author">AUTHOR</string>
+    <string name="author_id">authorId: </string>
+    <string name="author_name">name: </string>
+
+    <string name="click_me">click me</string>
+    <string name="hi">HI</string>
+</resources>
