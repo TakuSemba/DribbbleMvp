@@ -10,6 +10,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -18,8 +19,8 @@ import rx.schedulers.Schedulers;
  */
 public class ShotService {
 
-    public static void fetchShots(Context context, int page, Observable.Transformer<List<Shot>, List<Shot>> transformer, Observer<List<Shot>> observer) {
-        RestClient.getRetrofit(context).create(ShotApi.class)
+    public static Subscription fetchShots(Context context, int page, Observable.Transformer<List<Shot>, List<Shot>> transformer, Observer<List<Shot>> observer) {
+        return RestClient.getRetrofit(context).create(ShotApi.class)
                 .fetchShots(page, 24)
                 .compose(transformer)
                 .subscribeOn(Schedulers.io())
@@ -27,8 +28,8 @@ public class ShotService {
                 .subscribe(observer);
     }
 
-    public static void fetchShot(Context context, int id, Observable.Transformer<Shot, Shot> transformer, Observer<Shot> observer) {
-        RestClient.getRetrofit(context).create(ShotApi.class)
+    public static Subscription fetchShot(Context context, int id, Observable.Transformer<Shot, Shot> transformer, Observer<Shot> observer) {
+        return RestClient.getRetrofit(context).create(ShotApi.class)
                 .fetchShot(id)
                 .compose(transformer)
                 .subscribeOn(Schedulers.io())

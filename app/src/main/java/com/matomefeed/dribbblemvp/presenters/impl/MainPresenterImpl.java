@@ -11,6 +11,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 
 /**
  * Created by takusemba on 2016/11/01.
@@ -20,9 +21,11 @@ public class MainPresenterImpl implements MainPresenter {
 
     private MainView mainView;
 
+    private Subscription subscription;
+
     @Override
     public void fetchShots(Context context, int page, Observable.Transformer<List<Shot>, List<Shot>> transformer) {
-        ShotService.fetchShots(context, page, transformer, new Observer<List<Shot>>() {
+        subscription = ShotService.fetchShots(context, page, transformer, new Observer<List<Shot>>() {
             @Override
             public void onCompleted() {
                 mainView.hideCenterProgress();
@@ -51,5 +54,8 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void detachView() {
         mainView = null;
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
     }
 }

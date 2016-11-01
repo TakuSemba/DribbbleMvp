@@ -9,6 +9,7 @@ import com.matomefeed.dribbblemvp.views.DetailView;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 
 /**
  * Created by takusemba on 2016/11/01.
@@ -18,9 +19,11 @@ public class DetailPresenterImpl implements DetailPresenter {
 
     private DetailView detailView;
 
+    private Subscription subscription;
+
     @Override
     public void fetchShot(Context context, int id, Observable.Transformer<Shot, Shot> transformer) {
-        ShotService.fetchShot(context, id, transformer, new Observer<Shot>() {
+        subscription = ShotService.fetchShot(context, id, transformer, new Observer<Shot>() {
             @Override
             public void onCompleted() {
                 detailView.hideCenterProgress();
@@ -49,5 +52,8 @@ public class DetailPresenterImpl implements DetailPresenter {
     @Override
     public void detachView() {
         detailView = null;
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
     }
 }
