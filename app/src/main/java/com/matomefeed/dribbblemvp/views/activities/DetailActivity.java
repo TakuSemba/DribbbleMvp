@@ -72,7 +72,7 @@ public class DetailActivity extends RxAppCompatActivity implements DetailView {
     @Override
     public void init() {
         showCenterProgress();
-        presenter.fetchShot(this, id, this.<Shot>bindToLifecycle());
+        presenter.fetchShot(this, id);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

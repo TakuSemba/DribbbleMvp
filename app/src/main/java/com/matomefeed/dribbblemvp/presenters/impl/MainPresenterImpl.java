@@ -6,12 +6,11 @@ import com.matomefeed.dribbblemvp.models.entities.Shot;
 import com.matomefeed.dribbblemvp.models.networks.services.ShotService;
 import com.matomefeed.dribbblemvp.presenters.MainPresenter;
 import com.matomefeed.dribbblemvp.views.MainView;
+import com.matomefeed.dribbblemvp.views.activities.MainActivity;
 
 import java.util.List;
 
-import rx.Observable;
 import rx.Observer;
-import rx.Subscription;
 
 /**
  * Created by takusemba on 2016/11/01.
@@ -21,11 +20,9 @@ public class MainPresenterImpl implements MainPresenter {
 
     private MainView mainView;
 
-    private Subscription subscription;
-
     @Override
-    public void fetchShots(Context context, int page, Observable.Transformer<List<Shot>, List<Shot>> transformer) {
-        subscription = ShotService.fetchShots(context, page, transformer, new Observer<List<Shot>>() {
+    public void fetchShots(Context context, int page) {
+        ShotService.fetchShots(context, page, ((MainActivity) context).<List<Shot>>bindToLifecycle(), new Observer<List<Shot>>() {
             @Override
             public void onCompleted() {
                 mainView.hideCenterProgress();
@@ -54,8 +51,5 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void detachView() {
         mainView = null;
-        if (subscription != null) {
-            subscription.unsubscribe();
-        }
     }
 }

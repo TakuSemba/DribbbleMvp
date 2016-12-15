@@ -6,8 +6,10 @@ import com.matomefeed.dribbblemvp.models.entities.Shot;
 import com.matomefeed.dribbblemvp.models.networks.services.ShotService;
 import com.matomefeed.dribbblemvp.presenters.DetailPresenter;
 import com.matomefeed.dribbblemvp.views.DetailView;
+import com.matomefeed.dribbblemvp.views.activities.DetailActivity;
 
-import rx.Observable;
+import java.util.List;
+
 import rx.Observer;
 import rx.Subscription;
 
@@ -22,8 +24,8 @@ public class DetailPresenterImpl implements DetailPresenter {
     private Subscription subscription;
 
     @Override
-    public void fetchShot(Context context, int id, Observable.Transformer<Shot, Shot> transformer) {
-        subscription = ShotService.fetchShot(context, id, transformer, new Observer<Shot>() {
+    public void fetchShot(Context context, int id) {
+        subscription = ShotService.fetchShot(context, id, ((DetailActivity) context).<Shot>bindToLifecycle(), new Observer<Shot>() {
             @Override
             public void onCompleted() {
                 detailView.hideCenterProgress();

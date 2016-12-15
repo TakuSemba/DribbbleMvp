@@ -72,7 +72,7 @@ public class MainActivity extends RxAppCompatActivity implements MainView, OnLis
         recyclerView.setAdapter(shotRecyclerAdapter);
         hideFooterProgress();
         showCenterProgress();
-        presenter.fetchShots(this, page, this.<List<Shot>>bindToLifecycle());
+        presenter.fetchShots(this, page);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -80,7 +80,7 @@ public class MainActivity extends RxAppCompatActivity implements MainView, OnLis
                 int diff = (view.getBottom() - (v.getHeight() + v.getScrollY()));
                 if (diff <= 500 && !isLoading) {
                     showFooterProgress();
-                    presenter.fetchShots(MainActivity.this, ++page, MainActivity.this.<List<Shot>>bindToLifecycle());
+                    presenter.fetchShots(MainActivity.this, ++page);
                 }
             }
         });
@@ -89,7 +89,7 @@ public class MainActivity extends RxAppCompatActivity implements MainView, OnLis
             public void onRefresh() {
                 page = 1;
                 clearShots();
-                presenter.fetchShots(MainActivity.this, page, MainActivity.this.<List<Shot>>bindToLifecycle());
+                presenter.fetchShots(MainActivity.this, page);
             }
         });
     }
